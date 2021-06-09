@@ -1,0 +1,28 @@
+* {
+    border: none;
+    outline: none;
+}
+body {
+    background: linear-gradient(to left, rgb(31, 214, 113), green);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 {
+    letter-spacing: 5px;
+}
+.todos {
+    margin: 3rem auto;
+    width: 50%;
+}
+.todos li {
+    font-size: large;
+    height: 2rem;
+    padding: .5rem;
+    background: #fff;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
