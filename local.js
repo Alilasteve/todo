@@ -1,4 +1,4 @@
-const todosDiv = document.querySelector('.todos')
+const todosUl = document.querySelector('.todos')
 const input = document.querySelector('#add')
 const saveBtn = document.querySelector('#save')
 
@@ -24,7 +24,7 @@ const addTodos = e => {
     let li = document.createElement('li');
     li.textContent =  input.value;
     saveTodos(input.value)
-    todosDiv.appendChild(li);
+    todosUl.appendChild(li);
     input.value = '';
 }
 
@@ -42,11 +42,11 @@ window.addEventListener('DOMContentLoaded', () => {
     todos.forEach( todo => {
         let li = document.createElement('li');
         li.textContent =  todo;
-        todosDiv.appendChild(li)
+        todosUl.appendChild(li)
         //delete todos
         li.addEventListener('dblclick', e => {
             deleteTodos(todos, e)
-            todosDiv.removeChild(li)
+            todosUl.removeChild(li)
         })
     })
 })

@@ -1,5 +1,5 @@
-const todosDiv = document.querySelector('.todos')
-const contentInput = document.querySelector('#add')
+const todosUl = document.querySelector('.todos')
+const input = document.querySelector('#add')
 const saveBtn = document.querySelector('#save')
 
 let db
@@ -8,8 +8,8 @@ const connectIDB = () => {
 
     const request = window.indexedDB.open('todos_db', 1)
 
-    request.addEventListener('error', () => {
-        alert('Db cannot be opened')
+    request.addEventListener('error', e => {
+		console.log(e.target.errorCode)
     })
     request.addEventListener('success', () => {
         db = request.result
@@ -29,11 +29,11 @@ const addTodos = e => {
 
     const transaction = db.transaction(['todos_data'], 'readwrite')
     const objectStore = transaction.objectStore('todos_data')
-    const newRecord = {content: contentInput.value}
+    const newRecord = {content: input.value}
     const request = objectStore.add(newRecord)
 
     request.addEventListener('success', () => {
-        contentInput.value = ''
+        input.value = ''
     })
     transaction.addEventListener('complete', () => {
         getTodos()
@@ -45,8 +45,8 @@ const addTodos = e => {
 
 const getTodos = () => {
 
-    while(todosDiv.firstChild){
-        todosDiv.removeChild(todosDiv.firstChild)
+    while(todosUl.firstChild){
+        todosUl.removeChild(todosUl.firstChild)
     }
     const objectStore = db.transaction('todos_data').objectStore('todos_data');
 
@@ -57,7 +57,7 @@ const getTodos = () => {
             const list = document.createElement('li')
             list.setAttribute('todo-id', cursor.value.id)
             list.textContent = cursor.value.content
-            todosDiv.appendChild(list)
+            todosUl.appendChild(list)
 
             list.ondblclick = deleteTodos
 
@@ -74,10 +74,10 @@ const deleteTodos = e => {
     objectStore.delete(todoId)
 
     transaction.addEventListener('complete', () => {
-        if(!todosDiv.firstChild){
+        if(!todosUl.firstChild){
             const message = document.createElement('li')
             message.textContent = 'No todo exist'
-            todosDiv.appendChild(message)
+            todosUl.appendChild(message)
         }
         e.target.parentNode.removeChild(e.target)
     })
